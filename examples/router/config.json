@@ -1,0 +1,50 @@
+{
+  "jev_endpoint": "https://api.typesafe.ai/v1/systemone",
+  "pinned_model": "jev-1.13.0",
+  "timeout_ms": 1200,
+  "api_key_file": "/Users/YOU/.config/model-router/typesafe-api-key",
+  "thresholds": {
+    "default": 0.9
+  },
+  "harnesses": {
+    "claude": {
+      "enabled": false,
+      "input_aliases": {
+        "haiku": "fast",
+        "sonnet": "balanced",
+        "opus": "deep",
+        "fable": "max"
+      },
+      "output": {
+        "fast": "haiku",
+        "balanced": "sonnet",
+        "deep": "opus",
+        "max": "fable"
+      },
+      "no_model": {
+        "agent_types": [],
+        "threshold": 0.9
+      }
+    },
+    "copilot": {
+      "enabled": false,
+      "input_aliases": {
+        "claude-haiku-4.5": "fast",
+        "claude-sonnet-5": "balanced",
+        "claude-opus-5.5": "deep",
+        "claude-fable-5": "max",
+        "claude-fable-5.1": "max"
+      },
+      "output": {
+        "fast": "claude-haiku-4.5",
+        "balanced": "claude-sonnet-5",
+        "deep": "claude-opus-5.5",
+        "max": "claude-fable-5.1"
+      },
+      "no_model": {
+        "agent_types": [],
+        "threshold": 0.9
+      }
+    }
+  }
+}

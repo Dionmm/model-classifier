@@ -1,0 +1,19 @@
+{
+  "tier": {
+    "type": "choice",
+    "instructions": "What is the main deliverable the subagent in `prompt` is asked to produce? Judge by the deliverable, not by how long or detailed the prompt is.",
+    "criteria": {
+      "fast": "Information only: search, read files, list things, run a command, or summarise. The agent does not change code and does not make judgements.",
+      "balanced": "Carry out work that someone has already decided: implement a written plan, phase, milestone or spec; apply listed review findings or nits; make a fix whose cause and approach are already stated in the prompt.",
+      "deep": "Decide or judge: write a design, spec, plan or ADR; review or audit code, a PR or a plan; investigate a problem whose cause is not yet known; write documentation or a runbook that needs original analysis."
+    }
+  },
+  "long_context": {
+    "type": "noul",
+    "instructions": "The task requires reading or holding a very large amount of material at once."
+  },
+  "needs_vision": {
+    "type": "noul",
+    "instructions": "The task requires looking at images, screenshots or diagrams."
+  }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Replace /Users/USERNAME and /absolute/path/to/model-routerd before loading; launchd does not expand "~". -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.dionmm.model-routerd</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/absolute/path/to/model-routerd</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/Users/USERNAME/.model-router/model-routerd.err</string>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>OTEL_EXPORTER_OTLP_ENDPOINT</key>
+		<string>http://localhost:4318</string>
+	</dict>
+</dict>
+</plist>

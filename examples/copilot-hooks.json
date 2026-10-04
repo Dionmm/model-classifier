@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "/ABSOLUTE/PATH/TO/router-spike hook --source copilot-native --event preToolUse",
+        "timeoutSec": 5
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "bash": "/ABSOLUTE/PATH/TO/router-spike hook --source copilot-native --event postToolUse",
+        "timeoutSec": 5
+      }
+    ]
+  }
+}

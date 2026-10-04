@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "matcher": "task",
+        "bash": "/ABSOLUTE/PATH/TO/model-router hook --harness copilot",
+        "timeoutSec": 3
+      }
+    ]
+  }
+}

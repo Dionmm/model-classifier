@@ -1,0 +1,20 @@
+{
+  "tier": {
+    "type": "choice",
+    "instructions": "What is the main deliverable the subagent in `prompt` is asked to produce, and how much judgement does it need? Judge by the deliverable and the situation described, not by how long or detailed the prompt is.",
+    "criteria": {
+      "fast": "Information only: search, read files, list things, run a command, or summarise. The agent does not change code and does not make judgements.",
+      "balanced": "Carry out code work that someone has already decided: implement a written plan, phase, milestone or spec; apply listed code review findings or nits; make a code fix whose cause and approach are already stated in the prompt.",
+      "deep": "Decide or judge as a normal step of the work: write or revise a design, spec, plan or ADR, including revising one to address review findings; do a routine review, re-review or audit of code, a PR or a plan, including checking that earlier findings were fixed; investigate a problem whose cause is not yet known; write documentation or a runbook that needs original analysis.",
+      "max": "Escalation that needs the strongest available judgement, stated as such in the prompt: earlier attempts or review rounds are described as having failed, disagreed or been escalated, and this agent must give a fresh, independent verdict; reassess or overturn a major decision already made; adjudicate disputed findings or false-positive verdicts; or a long investigation of an elusive root cause that others have already failed to find. The agent must itself be that escalation or reassessment. Words such as \"independent\", \"cold\" or \"escalate\" appearing in a role title, skill name or process name are not enough on their own."
+    }
+  },
+  "long_context": {
+    "type": "noul",
+    "instructions": "The task requires reading or holding a very large amount of material at once."
+  },
+  "needs_vision": {
+    "type": "noul",
+    "instructions": "The task requires looking at images, screenshots or diagrams."
+  }
+}

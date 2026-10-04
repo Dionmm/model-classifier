@@ -1,0 +1,20 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions: {}
+
+jobs:
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+    uses: ./.github/workflows/build-reusable.yml # zizmor: ignore[self-repository] -- GitHub reusable workflow calls require ./ for same-repo workflows.
+    with:
+      tag_name: ${{ github.ref_name }}
+      publish_release: true

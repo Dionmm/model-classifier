@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "minimumReleaseAge": "7 days",
+  "gomod": {
+    "enabled": true,
+    "postUpdateOptions": [
+      "gomodTidy"
+    ]
+  },
+  "packageRules": [
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "automerge": false
+    },
+    {
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "golang.org/x/vuln"
+      ],
+      "enabled": true
+    }
+  ]
+}

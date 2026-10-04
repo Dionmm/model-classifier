@@ -1,0 +1,19 @@
+{
+  "tier": {
+    "type": "choice",
+    "instructions": "Which model tier does the subagent task in `prompt` need?",
+    "criteria": {
+      "fast": "Mechanical or lookup work: search, read, list, run a command, summarise a small input.",
+      "balanced": "Ordinary implementation or analysis with clear requirements.",
+      "deep": "Design, planning, review, debugging an unknown cause, or subtle multi-step reasoning."
+    }
+  },
+  "long_context": {
+    "type": "noul",
+    "instructions": "The task requires reading or holding a very large amount of material at once."
+  },
+  "needs_vision": {
+    "type": "noul",
+    "instructions": "The task requires looking at images, screenshots or diagrams."
+  }
+}
