@@ -56,7 +56,12 @@ blocks enforcement in the affected harness until checked.
    `protect-release-tags` covers `refs/tags/v*`: it blocks creating,
    updating, deleting and force-pushing those tags, and only repository
    admins can bypass it.
-4. **Cut a first release** and check `gh attestation verify` against it.
+4. ~~**Cut a first release**~~ Done (4 Oct 2026): `v0.1.1`. `v0.1.0` published
+   no binaries because of a bug in the publish step (fixed in PR #3), and its
+   release notes mark it as broken. `v0.1.1` has 8 binaries and 8 SPDX SBOMs.
+   `gh attestation verify` passes for provenance and SBOM with
+   `--source-ref refs/tags/v0.1.1`, and it fails for the wrong tag or a
+   tampered file.
 5. **Install locally.** Fill in the plist placeholders, write the config and
    a 0600 API key file, add the hook configs, then run `model-router doctor`.
 6. **Transport check per harness**, Claude Code subagents first (see
