@@ -109,3 +109,67 @@ func TestSupplyChainVerifyCommandPinsSourceRefAndTagRuleset(t *testing.T) {
 		}
 	}
 }
+
+func workflowSteps(t *testing.T) []string {
+	t.Helper()
+	workflow := readRepoFile(t, ".github", "workflows", "build-reusable.yml")
+	return strings.Split(workflow, "\n      - ")
+}
+
+func TestSbomActionDoesNotUploadItsOwnArtifactsOrReleaseAssets(t *testing.T) {
+	n := 0
+	for _, step := range workflowSteps(t) {
+		if !strings.HasPrefix(step, "uses: anchore/sbom-action@") {
+			continue
+		}
+		n++
+		for _, want := range []string{`upload-artifact: "false"`, `upload-release-assets: "false"`} {
+			if !strings.Contains(step, want) {
+				t.Errorf("sbom-action step %d lacks %s, so it uploads stray files that publish-release would attach", n, want)
+			}
+		}
+	}
+	if n != 2 {
+		t.Fatalf("found %d sbom-action steps, want 2", n)
+	}
+}
+
+func TestReleaseDownloadIsLimitedToBuildArtifacts(t *testing.T) {
+	for _, step := range workflowSteps(t) {
+		if !strings.HasPrefix(step, "uses: actions/download-artifact@") {
+			continue
+		}
+		if !strings.Contains(step, "pattern: model-router-*") {
+			t.Fatal("download-artifact step lacks pattern: model-router-*, so unrelated workflow artifacts are downloaded")
+		}
+		if !strings.Contains(step, "merge-multiple: true") {
+			t.Fatal("download-artifact step lacks merge-multiple: true")
+		}
+		return
+	}
+	t.Fatal("no download-artifact step found")
+}
+
+func TestReleaseUploadGlobsFilesNotDirectories(t *testing.T) {
+	workflow := readRepoFile(t, ".github", "workflows", "build-reusable.yml")
+	var upload string
+	for _, line := range strings.Split(workflow, "\n") {
+		if strings.Contains(line, "gh release upload") {
+			upload = line
+		}
+	}
+	if upload == "" {
+		t.Fatal("no gh release upload command found")
+	}
+	for _, want := range []string{"release/dist/*", "release/sbom/*", "--clobber"} {
+		if !strings.Contains(upload, want) {
+			t.Errorf("gh release upload lacks %s: %s", want, strings.TrimSpace(upload))
+		}
+	}
+	if strings.Contains(upload, " release/*") {
+		t.Errorf("gh release upload globs release/*, which matches the dist and sbom directories: %s", strings.TrimSpace(upload))
+	}
+	if !strings.Contains(workflow, "shopt -s failglob") {
+		t.Error("release upload lacks shopt -s failglob, so an empty glob would not fail")
+	}
+}
