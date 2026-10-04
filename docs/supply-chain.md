@@ -17,10 +17,11 @@ gh attestation verify ./model-router-darwin-arm64 \
 
 The expected signer identity is the `Dionmm/model-classifier` repository
 running `.github/workflows/build-reusable.yml` for the exact `v*` release tag
-named in `--source-ref`. Because the release workflow grants `id-token: write`
-on tag pushes, the ruleset `protect-release-tags` protects `refs/tags/v*`: it
-blocks creating, updating, deleting and force-pushing those tags, and only
-repository admins can bypass it.
+named in `--source-ref`. The repository must protect `v*` tags with a ruleset,
+because the release workflow grants `id-token: write` on tag pushes. That
+ruleset is `protect-release-tags` on `refs/tags/v*`: it blocks creating,
+updating, deleting and force-pushing those tags, and only repository admins
+can bypass it.
 
 Scanner exceptions live in `.github/scan-ignore.json` as `{id, reason,
 expires}` entries. It is empty initially; CI checks only expiry/schema because
