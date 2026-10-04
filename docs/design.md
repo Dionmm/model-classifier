@@ -45,12 +45,17 @@ blocks enforcement in the affected harness until checked.
    - Both `timeout_ms` bounds are tested.
 
    The final round was clear: gofmt, vet, `go test -race -count=3` and
-   govulncheck all pass.
-2. **Put the repo under version control.** It is not a git repository yet,
-   so the CI, release and zizmor workflows have never run on GitHub. Only
-   `actionlint` and `zizmor` have been run, locally.
-3. **Repo settings.** Protect `v*` tags with a ruleset; `id-token` is granted
-   on tag pushes (see `docs/supply-chain.md`).
+   source-mode govulncheck all pass locally.
+2. ~~**Put the repo under version control.**~~ Done (4 Oct 2026): public at
+   `Dionmm/model-classifier`. CI ran on GitHub for the first time, and its
+   binary-mode govulncheck caught GO-2026-6443 in grpc, which the
+   source-mode scan had reported as not called. PR #1 fixed it. The release
+   workflow first runs with the first tag. zizmor runs only on PRs that touch
+   `.github/` and has not run on GitHub yet.
+3. ~~**Repo settings.**~~ Done (4 Oct 2026). The ruleset
+   `protect-release-tags` covers `refs/tags/v*`: it blocks creating,
+   updating, deleting and force-pushing those tags, and only repository
+   admins can bypass it.
 4. **Cut a first release** and check `gh attestation verify` against it.
 5. **Install locally.** Fill in the plist placeholders, write the config and
    a 0600 API key file, add the hook configs, then run `model-router doctor`.
